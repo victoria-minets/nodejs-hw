@@ -37,9 +37,11 @@ export const deleteNote = async (req, res, next) => {
     _id: noteId,
   });
 
+  // findByIdAndDelete - тільки по ID шукає і видаляє
+  // findOneAndDelete - можна дописати ще додаткові умови - категорія, ще щось
+
   if (!note) {
-    next(createHttpError(404, 'Note not found'));
-    return;
+    throw createHttpError(404, 'Note not found');
   }
 
   res.status(200).json(note);
@@ -50,13 +52,12 @@ export const updateNote = async (req, res, next) => {
 
   const note = await Note.findOneAndUpdate(
     { _id: noteId }, // Шукаємо по id
-    req.body,
-    { new: true }, // повертаємо оновлений документ
+    req.body, // передаємо оновлення
+    { new: true }, // за замовленням нічого не поверає, щоб повернути оновлений документ, треба цю дод.властивість
   );
 
   if (!note) {
-    next(createHttpError(404, 'Note not found'));
-    return;
+    throw createHttpError(404, 'Note not found');
   }
 
   res.status(200).json(note);

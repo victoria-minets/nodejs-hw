@@ -17,7 +17,7 @@ const PORT = process.env.PORT ?? 3000; // Використовуємо знач�
 
 // Глобальні middleware
 app.use(logger); // 1. Логер першим — бачить усі запити
-app.use(express.json({ limit: '100kb' })); // 2. Парсинг JSON у body запиту
+app.use(express.json({ limit: '100kb' })); // 2. (Парсинг) Якщо у запиті є JSON, то його додає у властивсть body запиту
 app.use(cors()); // 3. Дозвіл для запитів з інших доменів
 app.use(helmet()); // для безпеки від шкідливих запитів - дуже рекомендовано
 
