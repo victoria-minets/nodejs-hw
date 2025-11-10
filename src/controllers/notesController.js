@@ -14,11 +14,13 @@ export const getAllNotes = async (req, res) => {
 
 export const getNoteById = async (req, res, next) => {
   const { noteId } = req.params;
-  const note = await Note.findById(noteId);
+  const note = await Note.findById(noteId); //коротший сінтаксис нової версії
 
   if (!note) {
-    next(createHttpError(404, 'Note not found'));
-    return;
+    throw createHttpError(404, 'Note not found');
+    // інший правильний варіант (на старіших версіях)
+    // next(createHttpError(404, 'Note not found'));
+    // return;
   }
 
   res.status(200).json(note);
