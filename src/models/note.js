@@ -1,8 +1,6 @@
 // src/models/note.js
 
-import { Schema } from 'mongoose';
-import { model } from 'mongoose';
-
+import { Schema, model } from 'mongoose';
 import { TAGS } from '../constants/tags.js';
 
 const noteSchema = new Schema(
@@ -23,6 +21,12 @@ const noteSchema = new Schema(
       required: false,
       default: 'Todo',
       enum: TAGS,
+    },
+    // Нова властивість
+    userId: {
+      type: Schema.Types.ObjectId,
+      ref: 'User',
+      required: true,
     },
   },
   {

@@ -4,6 +4,7 @@ import express from 'express';
 import 'dotenv/config'; // запускає скрипт, який витягує змінні з .env в корені додатка. розширений варіант dotenv.config ({шлях}) - якщо десь в іншому місці треба брати змінні оточення
 import cors from 'cors';
 import helmet from 'helmet';
+import cookieParser from 'cookie-parser';
 
 // Імпортуємо middleware
 import { errors } from 'celebrate';
@@ -13,6 +14,7 @@ import { logger } from './middleware/logger.js';
 import { notFoundHandler } from './middleware/notFoundHandler.js';
 import { errorHandler } from './middleware/errorHandler.js';
 
+import authRoutes from './routes/authRoutes.js';
 import notesRoutes from './routes/notesRoutes.js';
 
 const app = express();
@@ -22,7 +24,10 @@ const PORT = process.env.PORT ?? 3030; // Використовуємо знач�
 app.use(logger); // 1. Логер першим — бачить усі запити
 app.use(express.json({ limit: '100kb' })); // 2. (Парсинг) Якщо у запиті є JSON, то його додає у властивсть body запиту
 app.use(cors()); // 3. Дозвіл для запитів з інших доменів
+app.use(cookieParser());
 app.use(helmet()); // для безпеки від шкідливих запитів - дуже рекомендовано
+
+app.use(authRoutes);
 
 // підключаємо групу маршрутів
 app.use(notesRoutes);
