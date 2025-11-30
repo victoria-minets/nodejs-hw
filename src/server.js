@@ -16,6 +16,7 @@ import { errorHandler } from './middleware/errorHandler.js';
 
 import authRoutes from './routes/authRoutes.js';
 import notesRoutes from './routes/notesRoutes.js';
+import userRoutes from './routes/userRoutes.js';
 
 const app = express();
 const PORT = process.env.PORT ?? 3030; // Використовуємо значення з .env або дефолтний порт 3000
@@ -28,9 +29,8 @@ app.use(cookieParser());
 app.use(helmet()); // для безпеки від шкідливих запитів - дуже рекомендовано
 
 app.use(authRoutes);
-
-// підключаємо групу маршрутів
 app.use(notesRoutes);
+app.use(userRoutes);
 
 // 404 — якщо маршрут не знайдено
 app.use(notFoundHandler);

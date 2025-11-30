@@ -17,3 +17,16 @@ export const loginUserSchema = {
     // не треба уточнювати, що було при реєстрації
   }),
 };
+
+export const requestResetEmailSchema = {
+  [Segments.BODY]: Joi.object({
+    email: Joi.string().email().required(),
+  }),
+};
+
+export const resetPasswordSchema = {
+  [Segments.BODY]: Joi.object({
+    password: Joi.string().min(8).required(),
+    token: Joi.string().required(),
+  }),
+};
